@@ -41,7 +41,7 @@ export const MagicText: React.FC<MagicTextProps> = ({ text }) => {
   return (
     <div 
       ref={containerRef} 
-      className="relative flex flex-wrap justify-end text-right max-w-2xl leading-[1.15] pr-2 md:pr-10 text-black"
+      className="relative flex flex-wrap justify-center text-center max-w-245 mx-auto leading-[1.4] p-4 text-black"
     >
       {words.map((word, i) => (
         <span 

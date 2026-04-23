@@ -7,25 +7,27 @@ import { Footer } from "@/components/Footer";
 export default function Home() {
   return (
     <main className="relative w-full">
+      
       {/* Sticky Hero Wrapper */}
       <div className="sticky top-0 w-full h-screen">
         <Hero />
       </div>
 
-      {/* Additional Scrollable Sections */}
+      {/* about section that scrolls over the Hero */}
       <div id="about">
         <AboutSection />
       </div>
-      
-      {/* Content that scrolls over the Hero */}
-      <div id="projects">
-        <InteractiveSection />
-      </div>
-      
+
+      {/* service secion */}
       <div id="services">
         <ServicesSection />
       </div>
-      
+
+      {/* projects secion */}
+      <div id="projects">
+        <InteractiveSection />
+      </div>
+
       {/* Cinematic Reveal Footer */}
       <div id="contact">
         <Footer />

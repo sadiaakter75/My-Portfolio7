@@ -58,7 +58,6 @@ export default function AboutSection() {
       });
 
       // ── Text: smooth staggered entrance ───────────────────────────
-      // Set fronts hidden below slot, clones parked below
       const fronts = frontRefs.current.filter(Boolean) as HTMLSpanElement[];
       const clones = cloneRefs.current.filter(Boolean) as HTMLSpanElement[];
 
@@ -115,7 +114,7 @@ export default function AboutSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative z-10 w-full min-h-[120vh] bg-[#F4F4F4] text-black overflow-hidden flex flex-col justify-center py-40 shadow-[0_-30px_60px_-15px_rgba(0,0,0,0.8)]"
+      className="relative z-10 w-full min-h-[120vh] bg-[#F4F4F4] text-black overflow-hidden flex flex-col justify-center py-40 boder-rounded-40 rounded-t-3xl shadow-[0_-30px_60px_-15px_rgba(0,0,0,0.8)]"
     >
       {/* ── Stars ─────────────────────────────────────────────────── */}
       {STAR_CONFIGS.map((cfg, i) => (
@@ -149,7 +148,7 @@ export default function AboutSection() {
                 key={`${ch}-${i}`}
                 className="relative inline-block overflow-hidden cursor-default select-none"
                 style={{
-                  fontSize: "clamp(3.8rem, 12.5vw, 14.5rem)",
+                  fontSize: "clamp(3.2rem, 14.5vw, 14.5rem)",
                   lineHeight: 0.88,
                   verticalAlign: "bottom",
                   willChange: "transform",
@@ -182,8 +181,8 @@ export default function AboutSection() {
         </div>
       </div>
 
-      {/* ── Magic Paragraph — right aligned ───────────────────────── */}
-      <div className="relative z-10 w-full flex justify-end px-6 md:px-16">
+      {/* ── Magic Paragraph — center aligned ────────────────────── */}
+      <div className="relative z-10 w-full flex justify-center">
         <MagicText text="We are a web development team focused on building clean, functional, and user-friendly websites. Our goal is to create digital experiences that not only look good but also perform reliably." />
       </div>
     </section>

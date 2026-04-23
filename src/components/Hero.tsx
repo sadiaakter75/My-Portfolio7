@@ -7,11 +7,11 @@ import { motion } from "motion/react";
 import { Images } from "lucide-react";
 
 const IMAGES = [
-  "https://picsum.photos/seed/agency1/1920/1080",
-  "https://picsum.photos/seed/agency2/1920/1080",
-  "https://picsum.photos/seed/agency3/1920/1080",
-  "https://picsum.photos/seed/agency4/1920/1080",
-  "https://picsum.photos/seed/agency5/1920/1080",
+  "/images/img1.jpg",
+  "/images/img2.jpg",
+  "/images/img3.jpg",
+  "/images/img4.jpg",
+  "/images/img5.jpg",
 ];
 
 export default function Hero() {
@@ -87,7 +87,7 @@ export default function Hero() {
   }, [currentIndex]);
 
   return (
-    <main className="relative min-h-screen w-full bg-[#050505] font-[Helvetica_Neue,Arial,sans-serif] text-white overflow-x-hidden">
+    <main className="relative min-h-screen w-full bg-[#050505] font-sans text-white overflow-x-hidden">
       
 
       {/* Fixed Hero Section */}
@@ -120,24 +120,22 @@ export default function Hero() {
 
         {/* Theme specific decorative visuals */}
         <div 
-          className="absolute top-0 left-0 w-full h-[65%] border-b border-white/10 opacity-30 z-10 pointer-events-none"
+          className="absolute top-0 left-0 w-full h-full border-b border-white/10 opacity-25 z-10 pointer-events-none"
           style={{
             background: 'linear-gradient(45deg, #111 25%, #161616 25%, #161616 50%, #111 50%, #111 75%, #161616 75%, #161616 100%)',
             backgroundSize: '100px 100px'
           }}
         />
-        <div className="absolute top-[86%] left-0 w-full h-[2px] bg-[#FF3E00] shadow-[0_0_20px_#FF3E00] z-20 pointer-events-none" />
-        <div className="absolute right-0 top-[20%] w-1px h-[200px] bg-white/20 z-20 pointer-events-none" />
 
         {/* Big Title Typography (Bottom Left) matching Bold Typography theme padding */}
-        <div className="relative z-30 grow flex flex-col justify-end px-6 md:px-[60px] pb-[80px] pointer-events-none">
+        <div className="relative z-30 grow flex flex-col justify-start pt-[120px] items-center text-center md:justify-end md:items-start md:text-left md:pt-0 px-6 md:px-[60px] pb-[80px] pointer-events-none">
           <motion.h1
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-            className="text-white text-[115px] max-md:text-6xl font-extrabold uppercase leading-[0.88] tracking-[-4px] m-0"
+            className="text-white text-5xl md:text-8xl font-extrabold uppercase leading-[0.90] tracking-[-3px] m-0"
           >
-            {["Website", "Development", "Agency"].map((word, index) => (
+            {["CREATIVE", "DEVELOPER &", "DESIGNER"].map((word, index) => (
               <span key={word} className="block overflow-hidden">
                 <motion.span
                   initial={{ y: "110%", opacity: 0 }}
@@ -150,6 +148,8 @@ export default function Hero() {
                   className={
                     index === 2
                       ? "block text-[#FF3E00]"
+                      : index === 1
+                      ? "block mix-blend-difference"
                       : "block"
                   }
                 >
@@ -158,13 +158,20 @@ export default function Hero() {
               </span>
             ))}
           </motion.h1>
+          {/* Meta info component - stacked below title on mobile, absolute bottom-right on desktop */}
+          <div className="mt-4 md:mt-0 md:absolute md:bottom-[80px] md:right-[60px] flex flex-col items-center md:items-end gap-[10px] text-center md:text-right z-30 pointer-events-none">
+            <div className="text-[12px] opacity-50 tracking-[4px] uppercase max-w-[200px]">Crafting high-performance digital experiences</div>
+          </div>
         </div>
 
-        {/* Meta info component from the theme */}
-        <div className="absolute bottom-[80px] right-6 md:right-[60px] flex flex-col items-end gap-[10px] text-right z-30 pointer-events-none">
-          <div className="text-[14px] font-bold opacity-40 tracking-[2px]">01 / 05</div>
-          <div className="text-[12px] opacity-50 tracking-[4px] uppercase max-w-[200px]">Crafting high-performance digital experiences</div>
-        </div>
+        {/* Grid Overlay to match hero style subtly */}
+      <div 
+        className="absolute inset-0 z-0 pointer-events-none opacity-[0.1]"
+        style={{
+          backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px)`,
+          backgroundSize: '10vw 100%'
+        }}
+      />
       </section>
     </main>
   );
