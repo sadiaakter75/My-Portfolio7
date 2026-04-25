@@ -68,7 +68,7 @@ export default function Nav() {
 
     tl.to(".nav-blur-backdrop", {
       opacity: 1,
-      backdropFilter: "blur(12px)",
+      backdropFilter: "blur(7px)",
       pointerEvents: "auto",
       duration: 0.8,
       ease: "power3.inOut"

@@ -7,11 +7,11 @@ import { MagicText } from "./ui/AboutUi/magic-text";
 import { StarIcon } from "./ui/AboutUi/FlowerIcon";
 
 const STAR_CONFIGS = [
-  { top: "8%",  left: "6%",   color: "#FF4500", size: "w-8 h-8",   side: "left"  },
-  { top: "15%", left: "18%",  color: "#000",    size: "w-5 h-5",   side: "left"  },
-  { top: "35%", left: "4%",   color: "#000",    size: "w-10 h-10", side: "left"  },
-  { top: "55%", left: "12%",  color: "#FF4500", size: "w-6 h-6",   side: "left"  },
-  { top: "72%", left: "7%",   color: "#FF4500", size: "w-9 h-9",   side: "left"  },
+  { top: "24%",  left: "22%",   color: "#FF4500", size: "w-8 h-8",   side: "left"  },
+  { top: "39%", left: "37%",  color: "#000",    size: "w-5 h-5",   side: "left"  },
+  { top: "35%", left: "1%",   color: "#000",    size: "w-10 h-10", side: "left"  },
+  { top: "54%", left: "14%",  color: "#FF4500", size: "w-6 h-6",   side: "left"  },
+  { top: "72%", left: "4%",   color: "#FF4500", size: "w-9 h-9",   side: "left"  },
   { top: "88%", left: "20%",  color: "#000",    size: "w-5 h-5",   side: "left"  },
   { top: "5%",  left: "78%",  color: "#000",    size: "w-7 h-7",   side: "right" },
   { top: "22%", left: "91%",  color: "#FF4500", size: "w-5 h-5",   side: "right" },
@@ -29,6 +29,7 @@ export default function AboutSection() {
   const frontRefs  = useRef<(HTMLSpanElement | null)[]>([]);
   const cloneRefs  = useRef<(HTMLSpanElement | null)[]>([]);
   const starRefs   = useRef<(HTMLDivElement | null)[]>([]);
+  const isAnimatingIn = useRef(true);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -57,23 +58,24 @@ export default function AboutSection() {
         tl.to(star, { x: 0, y: 0, rotation: 0, opacity: 1, ease: "none" }, 0);
       });
 
-      // ── Text: smooth staggered entrance ───────────────────────────
+      // ── Text: smooth staggered page entrance ───────────────────────────
       const fronts = frontRefs.current.filter(Boolean) as HTMLSpanElement[];
       const clones = cloneRefs.current.filter(Boolean) as HTMLSpanElement[];
 
-      gsap.set(fronts, { yPercent: 105, opacity: 0, skewY: 4 });
-      gsap.set(clones, { yPercent: 105 });
+      gsap.set(fronts, { xPercent: 105, opacity: 0, skewX: 3 });
+      gsap.set(clones, { xPercent: -105 });
 
       gsap.to(fronts, {
-        yPercent: 0,
+        xPercent: 0,
         opacity: 1,
-        skewY: 0,
+        skewX: 0,
         duration: 1.4,
         ease: "expo.out",
         stagger: {
           each: 0.045,
           from: "start",
         },
+        onComplete: () => { isAnimatingIn.current = false; },
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 78%",
@@ -88,6 +90,8 @@ export default function AboutSection() {
 
   // ── Hover: clean synchronized roll ─────────────────────────────────────
   const handleEnter = useCallback((i: number) => {
+    if (isAnimatingIn.current) return;
+
     const front = frontRefs.current[i];
     const clone = cloneRefs.current[i];
     if (!front || !clone) return;
@@ -96,20 +100,24 @@ export default function AboutSection() {
 
     // Match entrance: expo.out, skew, and longer duration
     gsap.to(front, { 
-      yPercent: -105, 
-      skewY: -4, 
+      xPercent: 105, 
+      skewX: 3, 
+      rotation: -9,
       duration: 0.8, 
       ease: "expo.out" 
     });
     gsap.to(clone, { 
-      yPercent: 0, 
-      skewY: 0, 
+      xPercent: 0, 
+      skewX: 0, 
+      rotation: 0,
       duration: 0.8, 
       ease: "expo.out" 
     });
   }, []);
 
   const handleLeave = useCallback((i: number) => {
+    if (isAnimatingIn.current) return;
+
     const front = frontRefs.current[i];
     const clone = cloneRefs.current[i];
     if (!front || !clone) return;
@@ -118,14 +126,16 @@ export default function AboutSection() {
 
     // Reset to base state with entrance style
     gsap.to(clone, { 
-      yPercent: 105, 
-      skewY: 4, 
+      xPercent: -105, 
+      skewX: 0, 
+      rotation: -9,
       duration: 0.8, 
       ease: "expo.out" 
     });
     gsap.to(front, { 
-      yPercent: 0, 
-      skewY: 0, 
+      xPercent: 0, 
+      skewX: 0, 
+      rotation: 0,
       duration: 0.8, 
       ease: "expo.out" 
     });
@@ -134,7 +144,7 @@ export default function AboutSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative z-10 w-full min-h-[120vh] bg-[#F4F4F4] text-black overflow-hidden flex flex-col justify-center py-40 boder-rounded-40 rounded-t-3xl shadow-[0_-30px_60px_-15px_rgba(0,0,0,0.8)]"
+      className="relative z-10 w-full min-h-[120vh] bg-[#F4F4F4] text-black overflow-hidden flex flex-col justify-center py-40 rounded-t-3xl shadow-[0_-30px_60px_-15px_rgba(0,0,0,0.8)]"
     >
       {/* ── Stars ─────────────────────────────────────────────────── */}
       {STAR_CONFIGS.map((cfg, i) => (
@@ -186,10 +196,10 @@ export default function AboutSection() {
                   {ch}
                 </span>
 
-                {/* Clone — orange, rolls in on hover */}
+                {/* Clone — black, rolls in on hover */}
                 <span
                   ref={(el) => { cloneRefs.current[i] = el; }}
-                  className="absolute left-0 top-0 inline-block font-black uppercase text-[#FF3E00]"
+                  className="absolute left-0 top-0 inline-block font-black uppercase text-[#0a0a0a]"
                   style={{ willChange: "transform" }}
                   aria-hidden="true"
                 >
