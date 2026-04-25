@@ -94,9 +94,19 @@ export default function AboutSection() {
 
     gsap.killTweensOf([front, clone]);
 
-    // Both move together — front out upward, clone in from below
-    gsap.to(front, { yPercent: -100, duration: 0.5, ease: "power2.inOut" });
-    gsap.to(clone, { yPercent: 0,    duration: 0.5, ease: "power2.inOut" });
+    // Match entrance: expo.out, skew, and longer duration
+    gsap.to(front, { 
+      yPercent: -105, 
+      skewY: -4, 
+      duration: 0.8, 
+      ease: "expo.out" 
+    });
+    gsap.to(clone, { 
+      yPercent: 0, 
+      skewY: 0, 
+      duration: 0.8, 
+      ease: "expo.out" 
+    });
   }, []);
 
   const handleLeave = useCallback((i: number) => {
@@ -106,9 +116,19 @@ export default function AboutSection() {
 
     gsap.killTweensOf([front, clone]);
 
-    // Both move together — clone out downward, front back to resting
-    gsap.to(clone, { yPercent: 100, duration: 0.5, ease: "power2.inOut" });
-    gsap.to(front, { yPercent: 0,   duration: 0.5, ease: "power2.inOut" });
+    // Reset to base state with entrance style
+    gsap.to(clone, { 
+      yPercent: 105, 
+      skewY: 4, 
+      duration: 0.8, 
+      ease: "expo.out" 
+    });
+    gsap.to(front, { 
+      yPercent: 0, 
+      skewY: 0, 
+      duration: 0.8, 
+      ease: "expo.out" 
+    });
   }, []);
 
   return (

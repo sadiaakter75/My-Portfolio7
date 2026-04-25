@@ -4,6 +4,7 @@ import * as React from "react";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { LiquidMetalButton } from "./ui/li-contact-btn";
 
 // Register ScrollTrigger safely for React
 if (typeof window !== "undefined") {
@@ -114,7 +115,7 @@ const STYLES = `
 }
 
 .footer-giant-bg-text {
-  font-size: 22vw;
+  font-size: 20vw;
   line-height: 0.75;
   font-weight: 900;
   letter-spacing: -0.05em;
@@ -137,7 +138,7 @@ const STYLES = `
 // -------------------------------------------------------------------------
 // 2. MAGNETIC BUTTON PRIMITIVE
 // -------------------------------------------------------------------------
-export type MagneticButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & 
+export type MagneticButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   React.AnchorHTMLAttributes<HTMLAnchorElement> & {
     as?: React.ElementType;
   };
@@ -192,7 +193,7 @@ const MagneticButton = React.forwardRef<HTMLElement, MagneticButtonProps>(
       }, element);
 
       return () => ctx.revert();
-    },[]);
+    }, []);
 
     return (
       <Component
@@ -273,7 +274,7 @@ export function Footer() {
     }, wrapperRef);
 
     return () => ctx.revert();
-  },[]);
+  }, []);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -282,14 +283,14 @@ export function Footer() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
-      
+
       <div
         ref={wrapperRef}
         className="relative h-screen w-full"
         style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
       >
         <footer className="fixed bottom-0 left-0 flex h-screen w-full flex-col justify-between overflow-hidden bg-black text-white cinematic-footer-wrapper">
-          
+
           {/* Ambient Light & Grid Background */}
           <div className="footer-aurora absolute left-1/2 top-1/2 h-[60vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 animate-footer-breathe rounded-[50%] blur-[80px] pointer-events-none z-0" />
           <div className="footer-bg-grid absolute inset-0 z-0 pointer-events-none" />
@@ -297,9 +298,9 @@ export function Footer() {
           {/* Giant background text */}
           <div
             ref={giantTextRef}
-            className="footer-giant-bg-text absolute -bottom-[5vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none"
+            className="footer-giant-bg-text absolute -bottom-[5vh] right-1/2 left-1/2 -translate-x-1/2 w-full whitespace-nowrap z-0 pointer-events-none select-none"
           >
-            CODElOG
+            LET'S TALK
           </div>
 
           {/* 1. Diagonal Sleek Marquee (Top of footer) */}
@@ -328,47 +329,50 @@ export function Footer() {
                   </svg>
                   Get in touch
                 </MagneticButton>
-                
+
                 <MagneticButton as="a" href="#" className="footer-glass-pill px-10 py-5 rounded-full text-white font-bold text-sm md:text-base flex items-center gap-3 group">
                   View our work
-                </MagneticButton>
-              </div>
-
-              {/* Secondary Text Links */}
-              <div className="flex flex-wrap justify-center gap-3 md:gap-6 w-full mt-2">
-                <MagneticButton as="a" href="#" className="footer-glass-pill px-6 py-3 rounded-full text-zinc-400 font-medium text-xs md:text-sm hover:text-white">
-                  Privacy Policy
-                </MagneticButton>
-                <MagneticButton as="a" href="#" className="footer-glass-pill px-6 py-3 rounded-full text-zinc-400 font-medium text-xs md:text-sm hover:text-white">
-                  Terms of Service
                 </MagneticButton>
               </div>
             </div>
           </div>
 
           {/* 3. Bottom Bar / Credits */}
-          <div className="relative z-20 w-full pb-8 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
-            
-            <div className="text-zinc-500 text-[10px] md:text-xs font-semibold tracking-widest uppercase order-2 md:order-1">
-              © 2026 Codelog. All rights reserved.
+          <div className="relative z-20 w-full pb-8 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between md:gap-0">
+
+            {/* Left Side: Copyright & Privacy */}
+            <div className="flex-1 flex items-center justify-between w-full md:w-auto order-2 md:order-1 md:pr-20 lg:pr-32">
+              <div className="text-zinc-500 text-[10px] md:text-xs font-semibold tracking-widest uppercase">
+                © 2026 Sadia. All rights reserved.
+              </div>
+              <a href="#" className="text-zinc-500 hover:text-white transition-colors text-[10px] md:text-xs font-semibold tracking-widest uppercase">
+                Privacy Policy
+              </a>
             </div>
 
-            <div className="footer-glass-pill px-6 py-3 rounded-full flex items-center gap-2 order-1 md:order-2 md:absolute md:left-1/2 md:-translate-x-1/2 cursor-default border-white/10">
+            {/* Center: Credits (Absolute Centered on Desktop) */}
+            <div className="footer-glass-pill px-6 py-3 rounded-full flex items-center gap-2 order-1 md:order-2 md:absolute md:left-1/2 md:-translate-x-1/2 cursor-default border-white/10 mb-6 md:mb-0">
               <span className="text-zinc-500 text-[10px] md:text-xs font-bold uppercase tracking-widest">Crafted with</span>
               <span className="animate-footer-heartbeat text-sm md:text-base text-red-500">❤</span>
               <span className="text-zinc-500 text-[10px] md:text-xs font-bold uppercase tracking-widest">by</span>
-              <span className="text-white font-black text-xs md:text-sm tracking-normal ml-1">CODELOG</span>
+              <span className="text-white font-black text-xs md:text-sm tracking-normal ml-1">SADIA</span>
             </div>
 
-            <MagneticButton
-              as="button"
-              onClick={scrollToTop}
-              className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center text-zinc-500 hover:text-white group order-3"
-            >
-              <svg className="w-5 h-5 transform group-hover:-translate-y-1.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-              </svg>
-            </MagneticButton>
+            {/* Right Side: Terms & Scroll Top */}
+            <div className="flex-1 flex items-center justify-between w-full md:w-auto order-3 md:pl-10 lg:pl-62">
+              <a href="#" className="text-zinc-500 hover:text-white transition-colors text-[10px] md:text-xs font-semibold tracking-widest uppercase">
+                Terms of Service
+              </a>
+              <MagneticButton
+                as="button"
+                onClick={scrollToTop}
+                className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center text-zinc-500 hover:text-white group"
+              >
+                <svg className="w-5 h-5 transform group-hover:-translate-y-1.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                </svg>
+              </MagneticButton>
+            </div>
 
           </div>
         </footer>

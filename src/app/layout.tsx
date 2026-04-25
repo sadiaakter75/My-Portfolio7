@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
-import Header from "@/components/navigation/Header";
+import Nav from "@/components/navigation/Nav";
 import LoadingScreen from "@/components/LoadingScreen";
 
 const bricolage = Bricolage_Grotesque({
@@ -30,7 +30,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         {/* <LoadingScreen /> */}
-        <Header />
+        <Nav />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

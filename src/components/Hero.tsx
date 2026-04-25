@@ -128,7 +128,7 @@ export default function Hero() {
         />
 
         {/* Big Title Typography (Bottom Left) matching Bold Typography theme padding */}
-        <div className="relative z-30 grow flex flex-col justify-start pt-[120px] items-center text-center md:justify-end md:items-start md:text-left md:pt-0 px-6 md:px-[60px] pb-[80px] pointer-events-none">
+        <div className="big text relative z-30 grow flex flex-col justify-start pt-[120px] items-center text-center md:justify-end md:items-start md:text-left md:pt-0 px-6 md:px-[60px] pb-[80px] pointer-events-none">
           <motion.h1
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -149,7 +149,7 @@ export default function Hero() {
                     index === 2
                       ? "block text-[#FF3E00]"
                       : index === 1
-                      ? "block mix-blend-difference"
+                      ? "block"
                       : "block"
                   }
                 >

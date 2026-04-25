@@ -1,0 +1,213 @@
+/* ── Shell: nav bar ─────────────────────────────────────── */
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2rem 3rem 0 3rem;
+  z-index: 1000;
+  mix-blend-mode: difference;
+  color: #fff;
+}
+
+/* ── Logo ───────────────────────────────────────────────── */
+.nav-logo {
+  cursor: pointer;
+}
+
+.nav-logo span {
+  font-family: 'Secondary';
+  font-size: 2rem;
+  letter-spacing: 0.1vw;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.nav-logo a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ── Toggler ────────────────────────────────────────────── */
+.nav-toggler {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* ── Hamburger SVG ──────────────────────────────────────── */
+.nav-hamburger-svg {
+  width: 48px;
+  height: 48px;
+  transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-line {
+  fill: none;
+  stroke: white;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+  transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+              stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.line-top-bottom {
+  stroke-dasharray: 12 63;
+}
+
+.nav-hamburger-svg.is-open {
+  transform: rotate(-45deg);
+}
+
+.nav-hamburger-svg.is-open .line-top-bottom {
+  stroke-dasharray: 20 300;
+  stroke-dashoffset: -32.42;
+}
+
+/* ── Nav overlay shell ──────────────────────────────────── */
+.nav-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100svh;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.nav-blur-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: -2;
+}
+
+.nav-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: right;
+  will-change: transform;
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .nav-bg {
+    width: 45vw;
+  }
+}
+
+.nav-bg:nth-child(1) { background-color: #f39b7d; }
+.nav-bg:nth-child(2) { background-color: #d6ebfc; }
+.nav-bg:nth-child(3) { background-color: #000000; }
+.nav-bg:nth-child(4) { background-color: #FF3E00; }
+
+/* ── Nav items panel ────────────────────────────────────── */
+.nav-items {
+  height: 100svh;
+  width: 100%;
+  margin-left: auto;
+  background-color: #0D0D0D;
+  clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%);
+  will-change: clip-path;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(2rem, 6vw, 5rem) clamp(1.5rem, 5vw, 4rem);
+}
+
+@media (min-width: 768px) {
+  .nav-items {
+    width: 45vw;
+  }
+}
+
+/* ── Column ─────────────────────────────────────────────── */
+.nav-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  flex: 1;
+}
+
+/* ── Socials List ───────────────────────────────────────── */
+.nav-socials-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+/* ── Social link shared ─────────────────────────────────── */
+.nav-social-link {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-right: 1.5rem;
+}
+
+.nav-primary-link {
+  font-family: var(--font-bricolage), sans-serif;
+  font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.nav-primary-link,
+.nav-social-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;  /* needed for TextStaggerHover overflow */
+}
+
+.nav-social-link {
+  font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+}
+
+/* ── Arrow icon ─────────────────────────────────────────── */
+.arrow-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35em;
+  height: 1.35em;
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  font-size: 0.7em;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+/* ── Reveal wrapper ─────────────────────────────────────── */
+.link-reveal-wrap {
+  overflow: hidden;
+  line-height: 1.1;
+}
+
+.nav-link-inner {
+  will-change: transform;
+}
