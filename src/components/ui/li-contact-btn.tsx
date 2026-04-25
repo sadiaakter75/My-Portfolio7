@@ -279,7 +279,7 @@ export function LiquidMetalButton({
             {viewMode === "text" && (
               <span
                 style={{
-                  fontSize: "14px",
+                  fontSize: "16px",
                   color: "#ffffff",
                   fontWeight: 400,
                   textShadow: "0px 1px 2px rgba(0,0,0,0.5)",
@@ -310,7 +310,7 @@ export function LiquidMetalButton({
                 height: `${dimensions.innerHeight}px`,
                 margin: "2px",
                 borderRadius: "100px",
-                background: "linear-gradient(180deg,#04a2fd 0%,#01064f 100%)",
+                background: "linear-gradient(180deg,#949494 0%, #404040 45%, #000000 100%)",
                 boxShadow: isPressed
                   ? "inset 0px 2px 4px rgba(0,0,0,0.4), inset 0px 1px 2px rgba(0,0,0,0.3)"
                   : "none",
