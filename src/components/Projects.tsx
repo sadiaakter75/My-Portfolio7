@@ -29,7 +29,7 @@ export default function InteractiveSection() {
           {IMAGES.map((src, i) => (
             <div key={i} className="relative w-full aspect-4/5 overflow-hidden group">
               <img 
-                src={src} 
+                src={src || undefined} 
                 alt={`Interactive Image ${i + 1}`}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />

@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import InteractiveSection from "@/components/Projects";
+import FeaturedProjects from "@/components/FeaturedProjects";
 import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
 import { Footer } from "@/components/Footer";
@@ -26,6 +27,11 @@ export default function Home() {
       {/* projects secion */}
       <div id="projects">
         <InteractiveSection />
+      </div>
+
+      {/* featured projects section */}
+      <div id="featured-projects">
+        <FeaturedProjects />
       </div>
 
       {/* Cinematic Reveal Footer */}

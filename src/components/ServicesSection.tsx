@@ -11,7 +11,7 @@ const STEPS: ServiceStep[] = [
     num: "01",
     title: "Get in Touch",
     desc: "Let us know your project requirements on X or LinkedIn and we'll get back to you with a proposal.",
-    img: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=1000",
+    img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1200",
   },
   {
     num: "02",
@@ -29,7 +29,7 @@ const STEPS: ServiceStep[] = [
     num: "04",
     title: "Launch and Support",
     desc: "We make your website live and provide ongoing support to ensure everything runs smoothly.",
-    img: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=1000",
+    img: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=1000",
   }
 ];
 
@@ -42,12 +42,11 @@ export default function ServicesSection() {
     const ctx = gsap.context(() => {
       const stepElements = gsap.utils.toArray('.step-item') as HTMLElement[];
       const imgElements = gsap.utils.toArray('.step-img') as HTMLElement[];
-      
       const headlineChars = gsap.utils.toArray('h2 .reveal-char') as HTMLElement[];
 
-      // Initial state
+      // ─── Headline entrance ───────────────────────────────────────────────
       gsap.set(headlineChars, { xPercent: 105, opacity: 0, skewX: 3 });
-      
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -56,41 +55,31 @@ export default function ServicesSection() {
         }
       });
 
-      // 1. Headline Rolls In
       tl.to(headlineChars, {
         xPercent: 0,
         opacity: 1,
         skewX: 0,
         duration: 1.2,
         ease: "expo.out",
-        stagger: {
-          each: 0.025,
-          from: "start"
-        }
+        stagger: { each: 0.025, from: "start" }
       });
 
-      // 2. Sequential Step Animations
-      stepElements.forEach((step, i) => {
+      stepElements.forEach((step) => {
         const titleChars = gsap.utils.toArray(step.querySelectorAll('h3 .reveal-char')) as HTMLElement[];
         const desc = step.querySelector('.reveal-desc');
 
         gsap.set(titleChars, { xPercent: 105, opacity: 0, skewX: 3 });
         gsap.set(desc, { opacity: 0, y: 15 });
 
-        // Title Roll-up (Faster)
         tl.to(titleChars, {
           xPercent: 0,
           opacity: 1,
           skewX: 0,
           duration: 1,
           ease: "expo.out",
-          stagger: {
-            each: 0.025,
-            from: "start"
-          }
+          stagger: { each: 0.025, from: "start" }
         }, "-=0.5");
 
-        // Description Fade-in (Faster)
         tl.to(desc, {
           opacity: 1,
           y: 0,
@@ -99,12 +88,51 @@ export default function ServicesSection() {
         }, "-=0.4");
       });
 
-      // 0. Set Initial State: Make first image visible immediately
-      gsap.set(imgElements[0], { opacity: 1, scale: 1, filter: "blur(0px)" });
+      // ─── FIX 1: Snap scrolling ────────────────────────────────────────────
+      // Snaps between each step as user scrolls through the section
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        snap: {
+          snapTo: (progress) => {
+            const container = containerRef.current;
+            if (!container) return progress;
+            const totalScroll = container.offsetHeight - window.innerHeight;
+            
+            // Calculate exact progress points for each step's center
+            const snapPoints = stepElements.map(step => {
+              const stepCenter = step.offsetTop + (step.offsetHeight / 2);
+              const scrollPos = stepCenter - (window.innerHeight / 2);
+              return Math.max(0, Math.min(1, scrollPos / totalScroll));
+            });
+            
+            // Snap to the absolute closest step center
+            return snapPoints.reduce((prev, curr) => 
+              Math.abs(curr - progress) < Math.abs(prev - progress) ? curr : prev
+            );
+          },
+          duration: { min: 0.6, max: 1.2 }, // Slower, much smoother snapping
+          ease: "power3.inOut",             // Premium buttery ease
+          delay: 0.1,                       // Wait slightly for user to stop scrolling
+        },
+      });
 
-      // 1. Section-wide Image Travel (Moving from top to bottom of the entire section)
+      // ─── FIX 2: "Come from inside" image initial state ────────────────────
+      // All images start incredibly small + blurred so they emerge from deep inside
+      gsap.set(imgElements, {
+        scale: 0.01,
+        opacity: 0,
+        filter: "blur(20px)",
+        transformOrigin: "center center",
+        zIndex: 0,
+      });
+      // First image is already open
+      gsap.set(imgElements[0], { scale: 1, opacity: 1, filter: "blur(0px)", zIndex: 1 });
+
+      // ─── Sticky image travel ─────────────────────────────────────────────
       gsap.to('.sticky-image-container', {
-        y: 450, 
+        y: 450,
         ease: "none",
         scrollTrigger: {
           trigger: containerRef.current,
@@ -114,84 +142,68 @@ export default function ServicesSection() {
         }
       });
 
-      // 2. Active states and individual image transitions
+      // ─── Per-step active states + image swap ─────────────────────────────
+      let zCounter = 1;
+
       stepElements.forEach((step, i) => {
         const icon = step.querySelector('.step-icon');
+
+        const activateImage = (idx: number) => {
+          zCounter++;
+          
+          // Bring the target image to the very front
+          gsap.set(imgElements[idx], { zIndex: zCounter });
+
+          // Incoming: emerge from deep inside → full size
+          // Added a cinematic twist (rotation) for extra spice
+          gsap.fromTo(imgElements[idx],
+            { 
+              scale: 0.01, 
+              opacity: 0, 
+              filter: "blur(20px)",
+              rotation: idx % 2 === 0 ? -8 : 8, // Alternate slight twist
+            },
+            {
+              scale: 1,
+              opacity: 1,
+              filter: "blur(0px)",
+              rotation: 0,
+              duration: 2.0, // Slower, majestic reveal
+              ease: "expo.out",
+              overwrite: true,
+            }
+          );
+        };
 
         ScrollTrigger.create({
           trigger: step,
           start: "top center",
           end: "bottom center",
+
           onEnter: () => {
-            gsap.to(step, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", overwrite: true });
-            if (icon) gsap.to(icon, { opacity: 1, scale: 1, rotation: 180, duration: 0.6, ease: "back.out(1.5)", overwrite: true });
-            
-            if (imgElements[i]) {
-              // Smoothly fade in the current image
-              gsap.to(imgElements[i], { 
-                opacity: 1, 
-                scale: 1, 
-                filter: "blur(0px)", 
-                duration: 1.2, 
-                ease: "power2.inOut", 
-                overwrite: true 
-              });
-
-              // Hide all other images with a matching smooth transition
-              imgElements.forEach((img, idx) => {
-                if (idx !== i) {
-                  gsap.to(img, { 
-                    opacity: 0, 
-                    scale: 1.1, 
-                    filter: "blur(10px)", 
-                    duration: 1.2, 
-                    ease: "power2.inOut", 
-                    overwrite: true 
-                  });
-                }
-              });
-            }
+            gsap.to(step, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", overwrite: true });
+            if (icon) gsap.to(icon, { opacity: 1, scale: 1, rotation: 180, duration: 0.8, ease: "back.out(1.5)", overwrite: true });
+            activateImage(i);
           },
+
           onLeave: () => {
-            gsap.to(step, { opacity: 0.3, y: 10, duration: 0.6, ease: "power2.inOut", overwrite: true });
-            if (icon) gsap.to(icon, { opacity: 0, scale: 0.5, rotation: 0, duration: 0.6, ease: "power2.inOut", overwrite: true });
+            gsap.to(step, { opacity: 0.3, y: 20, duration: 0.8, ease: "power3.inOut", overwrite: true });
+            if (icon) gsap.to(icon, { opacity: 0, scale: 0.5, rotation: 0, duration: 0.8, ease: "power3.inOut", overwrite: true });
           },
-          onEnterBack: () => {
-            gsap.to(step, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", overwrite: true });
-            if (icon) gsap.to(icon, { opacity: 1, scale: 1, rotation: 180, duration: 0.6, ease: "back.out(1.5)", overwrite: true });
-            
-            if (imgElements[i]) {
-              // Smoothly fade in when scrolling back
-              gsap.to(imgElements[i], { 
-                opacity: 1, 
-                scale: 1, 
-                filter: "blur(0px)", 
-                duration: 1.2, 
-                ease: "power2.inOut", 
-                overwrite: true 
-              });
 
-              // Hide all other images
-              imgElements.forEach((img, idx) => {
-                if (idx !== i) {
-                  gsap.to(img, { 
-                    opacity: 0, 
-                    scale: 0.9, 
-                    filter: "blur(10px)", 
-                    duration: 1.2, 
-                    ease: "power2.inOut", 
-                    overwrite: true 
-                  });
-                }
-              });
-            }
+          onEnterBack: () => {
+            gsap.to(step, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", overwrite: true });
+            if (icon) gsap.to(icon, { opacity: 1, scale: 1, rotation: 180, duration: 0.8, ease: "back.out(1.5)", overwrite: true });
+            activateImage(i);
           },
+
           onLeaveBack: () => {
-            gsap.to(step, { opacity: 0.3, y: 10, duration: 0.6, ease: "power2.inOut", overwrite: true });
-            if (icon) gsap.to(icon, { opacity: 0, scale: 0.5, rotation: 0, duration: 0.6, ease: "power2.inOut", overwrite: true });
-          }
+            gsap.to(step, { opacity: 0.3, y: -20, duration: 0.8, ease: "power3.inOut", overwrite: true });
+            if (icon) gsap.to(icon, { opacity: 0, scale: 0.5, rotation: 0, duration: 0.8, ease: "power3.inOut", overwrite: true });
+          },
         });
       });
+
     }, containerRef);
 
     return () => ctx.revert();
@@ -210,7 +222,8 @@ export default function ServicesSection() {
   return (
     <section ref={containerRef} className="relative z-10 w-full bg-[#F4F4F4] text-black overflow-hidden">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 py-24">
-        {/* Full-width Header Row */}
+
+        {/* Header */}
         <div className="mb-16 md:mb-24 flex justify-between items-center w-full">
           <span className="text-[#FF4500] font-sans font-medium text-sm tracking-widest uppercase">// Process</span>
           <h2 className="text-4xl md:text-6xl font-sans tracking-tight font-medium text-right">
@@ -219,12 +232,17 @@ export default function ServicesSection() {
         </div>
 
         <div className="flex flex-col md:flex-row gap-10 md:gap-20 items-start">
-          {/* Left Column (Scrollable Text) */}
+
+          {/* Left — Scrollable steps */}
           <div className="w-full md:w-1/2 flex flex-col step-list-wrapper">
             <div className="flex flex-col gap-8 md:gap-12 pb-[50vh] pt-[10vh]">
               {STEPS.map((step, i) => (
                 <div key={i} className="step-item relative opacity-30 flex gap-6 md:gap-8 transition-opacity">
-                  <StarIcon className={`step-icon absolute -left-10 md:-left-12 top-0 w-8 h-8 md:w-10 md:h-10 ${i % 2 === 0 ? 'text-[#FF4500]' : 'text-black'} opacity-0 scale-50`} />
+                  <StarIcon
+                    className={`step-icon absolute -left-10 md:-left-12 top-0 w-8 h-8 md:w-10 md:h-10 ${
+                      i % 2 === 0 ? 'text-[#FF4500]' : 'text-black'
+                    } opacity-0 scale-50`}
+                  />
                   <span className="text-zinc-500 font-mono text-lg md:text-xl font-medium mt-1">{step.num}</span>
                   <div className="flex flex-col gap-4">
                     <h3 className="text-3xl md:text-4xl font-sans font-medium text-zinc-900">
@@ -239,24 +257,23 @@ export default function ServicesSection() {
             </div>
           </div>
 
-          {/* Right Column (Sticky Image) */}
+          {/* Right — Sticky image panel */}
           <div className="hidden md:block w-full md:w-1/2 sticky top-[20vh] sticky-image-container">
+            {/* overflow-hidden clips the scale(1.15) bleed on outgoing images */}
             <div className="w-full aspect-4/5 relative overflow-hidden bg-zinc-200">
               {STEPS.map((step, i) => (
                 <img
                   key={i}
-                  src={step.img}
+                  src={step.img || undefined}
                   alt={step.title}
-                  className="step-img absolute inset-0 w-full h-full object-cover opacity-0"
-                  style={{ opacity: i === 0 ? 1 : 0 }}
+                  className="step-img absolute inset-0 w-full h-full object-cover"
                 />
               ))}
             </div>
           </div>
+
         </div>
       </div>
     </section>
   );
 }
-
-
