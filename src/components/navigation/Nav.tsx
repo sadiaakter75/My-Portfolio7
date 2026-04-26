@@ -6,11 +6,11 @@ import "./Nav.css";
 import { NavLink } from "./Nav-link";
 
 const PRIMARY_LINKS = [
-  { label: "Home",     href: "#home"     },
-  { label: "About",   href: "#about"    },
-  { label: "Skills",  href: "#skills"   },
-  { label: "Projects",href: "#projects" },
-  { label: "Contact", href: "#contact"  },
+  { label: "Home",    href: "#hero"    },
+  { label: "About",   href: "#about"   },
+  { label: "Services",href: "#services"},
+  { label: "Projects",href: "#projects"},
+  { label: "Contact", href: "#contact" },
 ];
 
 const SOCIAL_LINKS = [

@@ -46,7 +46,7 @@ export default function ServicesSection() {
       const headlineChars = gsap.utils.toArray('h2 .reveal-char') as HTMLElement[];
 
       // Initial state
-      gsap.set(headlineChars, { yPercent: 105, opacity: 0, skewY: 4 });
+      gsap.set(headlineChars, { xPercent: 105, opacity: 0, skewX: 3 });
       
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -58,12 +58,15 @@ export default function ServicesSection() {
 
       // 1. Headline Rolls In
       tl.to(headlineChars, {
-        yPercent: 0,
+        xPercent: 0,
         opacity: 1,
-        skewY: 0,
+        skewX: 0,
         duration: 1.2,
         ease: "expo.out",
-        stagger: 0.02
+        stagger: {
+          each: 0.025,
+          from: "start"
+        }
       });
 
       // 2. Sequential Step Animations
@@ -71,24 +74,27 @@ export default function ServicesSection() {
         const titleChars = gsap.utils.toArray(step.querySelectorAll('h3 .reveal-char')) as HTMLElement[];
         const desc = step.querySelector('.reveal-desc');
 
-        gsap.set(titleChars, { yPercent: 105, opacity: 0, skewY: 4 });
+        gsap.set(titleChars, { xPercent: 105, opacity: 0, skewX: 3 });
         gsap.set(desc, { opacity: 0, y: 15 });
 
         // Title Roll-up (Faster)
         tl.to(titleChars, {
-          yPercent: 0,
+          xPercent: 0,
           opacity: 1,
-          skewY: 0,
-          duration: 0.8,
+          skewX: 0,
+          duration: 1,
           ease: "expo.out",
-          stagger: 0.015
+          stagger: {
+            each: 0.025,
+            from: "start"
+          }
         }, "-=0.5");
 
         // Description Fade-in (Faster)
         tl.to(desc, {
           opacity: 1,
           y: 0,
-          duration: 0.7,
+          duration: 0.3,
           ease: "power2.out"
         }, "-=0.4");
       });

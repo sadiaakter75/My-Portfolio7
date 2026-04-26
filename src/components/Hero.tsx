@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import Image from "next/image";
-import { motion } from "motion/react";
 import { Images } from "lucide-react";
 
 const IMAGES = [
@@ -19,6 +18,7 @@ export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRefs = useRef<(HTMLImageElement | null)[]>([]);
   const prevIndexRef = useRef(0);
+  const titleRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
   useEffect(() => {
     // Initialize image stack on component mount
@@ -38,6 +38,22 @@ export default function Hero() {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % IMAGES.length);
     }, 4500);
+
+    // Text entrance animation
+    const fronts = titleRefs.current.filter(Boolean) as HTMLSpanElement[];
+    gsap.set(fronts, { xPercent: 105, opacity: 0, skewX: 3 });
+    gsap.to(fronts, {
+      xPercent: 0,
+      opacity: 1,
+      skewX: 0,
+      duration: 1.4,
+      ease: "expo.out",
+      stagger: {
+        each: 0.025,
+        from: "start",
+      },
+      delay: 0.4, // Small delay for initial load
+    });
 
     return () => clearInterval(interval);
   }, []);
@@ -88,7 +104,7 @@ export default function Hero() {
 
   return (
     <main className="relative min-h-screen w-full bg-[#050505] font-sans text-white overflow-x-hidden">
-      
+
 
       {/* Fixed Hero Section */}
       <section className="fixed inset-0 w-full h-screen overflow-hidden z-0 flex flex-col pointer-events-none">
@@ -119,7 +135,7 @@ export default function Hero() {
         <div className="absolute inset-0 bg-linear-to-b from-transparent from-40% to-black/80 z-10 pointer-events-none" />
 
         {/* Theme specific decorative visuals */}
-        <div 
+        <div
           className="absolute top-0 left-0 w-full h-full border-b border-white/10 opacity-25 z-10 pointer-events-none"
           style={{
             background: 'linear-gradient(45deg, #111 25%, #161616 25%, #161616 50%, #111 50%, #111 75%, #161616 75%, #161616 100%)',
@@ -129,35 +145,42 @@ export default function Hero() {
 
         {/* Big Title Typography (Bottom Left) matching Bold Typography theme padding */}
         <div className="big text relative z-30 grow flex flex-col justify-start pt-[120px] items-center text-center md:justify-end md:items-start md:text-left md:pt-0 px-6 md:px-[60px] pb-[80px] pointer-events-none">
-          <motion.h1
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+          <h1
             className="text-white text-5xl md:text-8xl font-extrabold uppercase leading-[0.90] tracking-[-3px] m-0"
           >
-            {["CREATIVE", "DEVELOPER &", "DESIGNER"].map((word, index) => (
-              <span key={word} className="block overflow-hidden">
-                <motion.span
-                  initial={{ y: "110%", opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{
-                    duration: 1.2,
-                    ease: [0.16, 1, 0.3, 1],
-                    delay: 0.4 + index * 0.15,
-                  }}
-                  className={
-                    index === 2
-                      ? "block text-[#FF3E00]"
-                      : index === 1
-                      ? "block"
-                      : "block"
-                  }
-                >
-                  {word}
-                </motion.span>
-              </span>
-            ))}
-          </motion.h1>
+            {["CREATIVE", "DEVELOPER &", "DESIGNER"].map((word, wordIndex) => {
+              let baseCharIdx = 0;
+              const wordsArray = ["CREATIVE", "DEVELOPER &", "DESIGNER"];
+              for (let i = 0; i < wordIndex; i++) {
+                baseCharIdx += wordsArray[i].length;
+              }
+
+              return (
+                <span key={word} className="block">
+                  {word.split("").map((ch, charIndex) => {
+                    const globalIndex = baseCharIdx + charIndex;
+                    if (ch === " ") {
+                      return <span key={`space-${wordIndex}-${charIndex}`} style={{ display: "inline-block", width: "0.25em" }} />;
+                    }
+                    return (
+                      <span
+                        key={`${ch}-${charIndex}`}
+                        className="relative inline-block overflow-hidden"
+                      >
+                        <span
+                          ref={(el) => { titleRefs.current[globalIndex] = el; }}
+                          className={`inline-block ${wordIndex === 2 ? "text-[#FF3E00]" : ""}`}
+                          style={{ willChange: "transform, opacity" }}
+                        >
+                          {ch}
+                        </span>
+                      </span>
+                    );
+                  })}
+                </span>
+              );
+            })}
+          </h1>
           {/* Meta info component - stacked below title on mobile, absolute bottom-right on desktop */}
           <div className="mt-4 md:mt-0 md:absolute md:bottom-[80px] md:right-[60px] flex flex-col items-center md:items-end gap-[10px] text-center md:text-right z-30 pointer-events-none">
             <div className="text-[12px] opacity-50 tracking-[4px] uppercase max-w-[200px]">Crafting high-performance digital experiences</div>
@@ -165,13 +188,13 @@ export default function Hero() {
         </div>
 
         {/* Grid Overlay to match hero style subtly */}
-      <div 
-        className="absolute inset-0 z-0 pointer-events-none opacity-[0.1]"
-        style={{
-          backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px)`,
-          backgroundSize: '10vw 100%'
-        }}
-      />
+        <div
+          className="absolute inset-0 z-0 pointer-events-none opacity-[0.1]"
+          style={{
+            backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px)`,
+            backgroundSize: '10vw 100%'
+          }}
+        />
       </section>
     </main>
   );

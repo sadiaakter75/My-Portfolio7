@@ -9,7 +9,7 @@ export default function Home() {
     <main className="relative w-full">
       
       {/* Sticky Hero Wrapper */}
-      <div className="sticky top-0 w-full h-screen">
+      <div id="hero" className="sticky top-0 w-full h-screen">
         <Hero />
       </div>
 
