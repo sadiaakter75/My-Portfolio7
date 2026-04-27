@@ -113,7 +113,7 @@ export default function FeaturedProjects() {
   return (
     <section 
       ref={sectionRef} 
-      className="relative z-10 w-full h-screen bg-zinc-950 overflow-hidden"
+      className="relative z-10 w-full h-screen bg-[#080808] overflow-hidden border-b border-orange-800"
     >
       {/* Grid Overlay to match hero style subtly */}
       <div 

@@ -92,14 +92,14 @@ const STYLES = `
   animation: footer-heartbeat 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
 }
 
-.footer-bg-grid {
-  background-size: 60px 60px;
-  background-image: 
-    linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
-  mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
-}
+// .footer-bg-grid {
+//   background-size: 60px 60px;
+//   background-image: 
+//     linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+//     linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+//   mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+//   -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+// }
 
 .footer-aurora {
   background: radial-gradient(
@@ -247,7 +247,7 @@ export function Footer() {
   const giantTextRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
-  const socialLinksRef = useRef<HTMLDivElement>(null);  
+  const socialLinksRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -307,11 +307,18 @@ export function Footer() {
         className="relative h-screen w-full"
         style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
       >
-        <footer className="fixed bottom-0 left-0 flex h-screen w-full flex-col overflow-hidden bg-black text-white cinematic-footer-wrapper">
+        <footer className="fixed bottom-0 left-0 flex h-screen w-full flex-col overflow-hidden bg-[#080808] text-white cinematic-footer-wrapper">
 
           {/* Ambient Light & Grid Background */}
           <div className="footer-aurora absolute left-1/2 top-1/2 h-[60vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 animate-footer-breathe rounded-[50%] blur-[80px] pointer-events-none z-0" />
-          <div className="footer-bg-grid absolute inset-0 z-0 pointer-events-none" />
+          {/* Grid Overlay to match hero style subtly */}
+          <div
+            className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]"
+            style={{
+              backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px)`,
+              backgroundSize: '10vw 100%'
+            }}
+          />
 
           {/* Giant background text */}
           <div
@@ -331,7 +338,7 @@ export function Footer() {
 
           {/* 2. Main Content */}
           <div className="relative z-10 flex flex-col md:flex-row flex-1 items-center justify-between px-6 mt-42 md:mt-12 w-full max-w-7xl mx-auto gap-12">
-            
+
             {/* Left Side: Heading and Button */}
             <div className="flex flex-col items-start gap-8 max-w-2xl w-full md:w-auto">
               <h2

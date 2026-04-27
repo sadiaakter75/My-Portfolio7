@@ -160,7 +160,7 @@ export default function ServicesSection() {
             { 
               scale: 0.01, 
               opacity: 0, 
-              filter: "blur(20px)",
+              filter: "blur(10px)",
               rotation: idx % 2 === 0 ? -8 : 8, // Alternate slight twist
             },
             {
@@ -168,7 +168,7 @@ export default function ServicesSection() {
               opacity: 1,
               filter: "blur(0px)",
               rotation: 0,
-              duration: 2.0, // Slower, majestic reveal
+              duration: 1.0, // Slower, majestic reveal
               ease: "expo.out",
               overwrite: true,
             }

@@ -20,7 +20,7 @@ export default function InteractiveSection() {
   return (
     <section 
       ref={containerRef}
-      className="relative z-10 w-full bg-zinc-950 text-white pb-32"
+      className="relative z-10 w-full bg-[#080808] text-white pb-32"
     >
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 py-24 flex flex-col md:flex-row gap-10">
         
