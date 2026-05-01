@@ -9,16 +9,14 @@ import { StarIcon } from "./ui/AboutUi/FlowerIcon";
 const STAR_CONFIGS = [
   { top: "24%",  left: "22%",   color: "#FF4500", size: "w-8 h-8",   side: "left"  },
   { top: "39%", left: "37%",  color: "#000",    size: "w-5 h-5",   side: "left"  },
-  { top: "35%", left: "1%",   color: "#000",    size: "w-10 h-10", side: "left"  },
-  { top: "54%", left: "14%",  color: "#FF4500", size: "w-6 h-6",   side: "left"  },
-  { top: "72%", left: "4%",   color: "#FF4500", size: "w-9 h-9",   side: "left"  },
-  { top: "88%", left: "20%",  color: "#000",    size: "w-5 h-5",   side: "left"  },
-  { top: "5%",  left: "78%",  color: "#000",    size: "w-7 h-7",   side: "right" },
-  { top: "22%", left: "91%",  color: "#FF4500", size: "w-5 h-5",   side: "right" },
-  { top: "42%", left: "85%",  color: "#FF4500", size: "w-10 h-10", side: "right" },
-  { top: "60%", left: "94%",  color: "#000",    size: "w-6 h-6",   side: "right" },
-  { top: "78%", left: "80%",  color: "#000",    size: "w-8 h-8",   side: "right" },
-  { top: "91%", left: "88%",  color: "#FF4500", size: "w-5 h-5",   side: "right" },
+  { top: "35%", left: "2%",   color: "#000",    size: "w-10 h-10", side: "left"  },
+  { top: "42%", left: "11%",  color: "#FF4500", size: "w-6 h-6",   side: "left"  },
+  { top: "25%",  left: "77%",  color: "#000",    size: "w-7 h-7",   side: "right" },
+  { top: "31%", left: "91%",  color: "#FF4500", size: "w-5 h-5",   side: "right" },
+  { top: "32%", left: "66%",  color: "#FF4500", size: "w-10 h-10", side: "right" },
+  // { top: "60%", left: "94%",  color: "#000",    size: "w-6 h-6",   side: "right" },
+  // { top: "78%", left: "80%",  color: "#000",    size: "w-8 h-8",   side: "right" },
+  // { top: "91%", left: "88%",  color: "#FF4500", size: "w-5 h-5",   side: "right" },
 ];
 
 const NAME = "SADIA AKTER";
@@ -151,7 +149,7 @@ export default function AboutSection() {
         <div
           key={i}
           ref={(el) => { starRefs.current[i] = el; }}
-          className="absolute pointer-events-none"
+          className="absolute pointer-events-none hidden md:block"
           style={{ top: cfg.top, left: cfg.left, willChange: "transform, opacity" }}
         >
           <StarIcon className={cfg.size} style={{ color: cfg.color }} />
@@ -213,7 +211,7 @@ export default function AboutSection() {
 
       {/* ── Magic Paragraph — center aligned ────────────────────── */}
       <div className="relative z-10 w-full flex justify-center">
-        <MagicText text="We are a web development team focused on building clean, functional, and user-friendly websites. Our goal is to create digital experiences that not only look good but also perform reliably." />
+        <MagicText text="I’m A Full Stack Developer Focused On Building Fast, Reliable, And User-Friendly Web Applications — Open To Meaningful Collaborations." />
       </div>
     </section>
   );

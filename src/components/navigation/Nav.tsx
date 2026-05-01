@@ -8,13 +8,13 @@ import { NavLink } from "./Nav-link";
 const PRIMARY_LINKS = [
   { label: "Home",    href: "#hero"    },
   { label: "About",   href: "#about"   },
-  { label: "Services",href: "#services"},
+  // { label: "Services",href: "#services"},
   { label: "Projects",href: "#projects"},
   { label: "Contact", href: "#contact" },
 ];
 
 const SOCIAL_LINKS = [
-  { label: "Github",   href: "https://github.com/mitu-akter78", target: "_blank", rel: "noopener noreferrer" },
+  { label: "Github",   href: "https://github.com/sadiaakter75", target: "_blank", rel: "noopener noreferrer" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/sadia-akter-8a484b3b7/", target: "_blank", rel: "noopener noreferrer" },
   { label: "X",        href: "https://x.com/AkterSadia85872", target: "_blank", rel: "noopener noreferrer" },
 ];

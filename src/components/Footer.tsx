@@ -376,7 +376,7 @@ export function Footer() {
                     hoverLabel="X"
                   />
                 </Link>
-                <Link href="https://github.com/mitu-akter78" target="_blank">
+                <Link href="https://github.com/sadiaakter75" target="_blank">
                   <LiquidMetalButton
                     viewMode="icon"
                     icon={<GitHubIcon />}

@@ -11,8 +11,8 @@ const bricolage = Bricolage_Grotesque({
 });
 
 export const metadata: Metadata = {
-  title: "Website Development Agency",
-  description: "A stunning website development agency hero section.",
+  title: "Sadia Akter",
+  description: "A Developer Portfolio website.",
 };
 
 export default function RootLayout({

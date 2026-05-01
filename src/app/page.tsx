@@ -20,17 +20,17 @@ export default function Home() {
       </div>
 
       {/* service secion */}
-      <div id="services">
+      {/* <div id="services">
         <ServicesSection />
-      </div>
+      </div> */}
 
-      {/* projects secion */}
+      {/* projects secion
       <div id="projects">
         <InteractiveSection />
-      </div>
+      </div> */}
 
       {/* featured projects section */}
-      <div id="featured-projects">
+      <div id="projects">
         <FeaturedProjects />
       </div>
 
