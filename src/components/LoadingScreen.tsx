@@ -15,7 +15,7 @@ export default function LoadingScreen() {
     const tl = gsap.timeline({
       onComplete: () => {
         setIsLoading(false);
-        document.body.style.overflow = 'auto';
+        document.body.style.overflow = '';
       }
     });
 
@@ -44,7 +44,7 @@ export default function LoadingScreen() {
     }, "-=1.2");
 
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = '';
     };
   }, []);
 

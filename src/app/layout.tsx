@@ -29,7 +29,7 @@ export default function RootLayout({
         className="min-h-full flex flex-col bg-zinc-950 text-white font-sans overflow-x-hidden"
         suppressHydrationWarning
       >
-        {/* <LoadingScreen /> */}
+        <LoadingScreen />
         <Nav />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
